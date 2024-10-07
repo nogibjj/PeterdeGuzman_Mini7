@@ -5,11 +5,15 @@ Extracting dataset from CSV hosted online
 import requests
 import os
 
+url = "https://s3.amazonaws.com/dl.ncsbe.gov/ENRS/2020_11_03/polling_place_20201103.csv"
+filepath = "data/pollingplaces_2020.csv"
+directory = "data"
+
 
 def extract(
-    url="https://s3.amazonaws.com/dl.ncsbe.gov/ENRS/2020_11_03/polling_place_20201103.csv",
-    filepath="data/pollingplaces_2020.csv",
-    directory="data",
+    url,
+    filepath,
+    directory,
 ):
     """Extract to file path"""
     if not os.path.exists(directory):
@@ -26,4 +30,4 @@ if __name__ == "__main__":
     else:
         print("Directory does not exist.")
 
-    extract()
+    extract(url, filepath, directory)

@@ -5,12 +5,19 @@ Transform and load with SQlite3 database
 import sqlite3
 import csv
 
+# dataset = "./data/pollingplaces_2020.csv"
 
-def load(dataset="./data/pollingplaces_2020.csv"):
+# def load_voterreg(dataset):
+
+# def load_votehistory(dataset):
+
+
+def load_pollingplaces(dataset="./data/pollingplaces_2020.csv", year=2020):
     data = open(dataset, newline="", encoding="utf-16")
     # NCSBE data includes null bytes, which must be removed
     payload = csv.reader((line.replace("\0", "") for line in data), delimiter="\t")
-    conn = sqlite3.connect("pollingplaces_2020.db")
+    db_name = "pollingplaces_"
+    conn = sqlite3.connect(f"{db_name}{year}.db")
     c = conn.cursor()
     # generate new table for the database
     c.execute("DROP TABLE IF EXISTS pollingplaces_2020")
@@ -54,4 +61,4 @@ def load(dataset="./data/pollingplaces_2020.csv"):
 
 
 if __name__ == "__main__":
-    load()
+    load_pollingplaces()
