@@ -1,15 +1,15 @@
- # This is a README for IDS 706 Mini Project 5
+ # This is a README for IDS 706 Mini Project 6
 
 ### Status Badge:
-[![CICD](https://github.com/nogibjj/PeterdeGuzman_Mini5/actions/workflows/cicd.yml/badge.svg)](https://github.com/nogibjj/PeterdeGuzman_Mini5/actions/workflows/cicd.yml)
+
 
 ### Summary and Project Motivation:
-In this project, I built a pipeline that connects a publicly available CSV to a SQLite database and executes Create, Read, Update, and Delete (CRUD) operations using SQL syntax in a Python script. These operations could be used in the future to update entries in the database. In this example, each database entry represents the address of a polling place location. 
+In this project, 
 
 ### Data Used in this Project:
-This project uses data on Election Day polling places for the November 3rd, 2020 election in North Carolina.
+This project uses data on 
 
-More information and a link to the data is available at: https://www.ncsbe.gov/results-data/polling-place-data
+More information and a link to the data is available at: 
 
 ### Structure:
 - In the `mylib` directory, `extract.py` extracts the raw data from the link to the NCSBE website. The `transform_load.py` script transforms the raw data from `.csv` to a `.db` SQLite database and creates a new connection.
@@ -24,7 +24,7 @@ More information and a link to the data is available at: https://www.ncsbe.gov/r
 
 ### Project Directory:
 ```
-PeterdeGuzman_Mini5/
+PeterdeGuzman_Mini6/
 ├── __pycache__/
 ├── .devcontainer/
 │   ├── devcontainer.json

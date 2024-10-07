@@ -21,8 +21,8 @@ def extract(
 
 
 if __name__ == "__main__":
-    if os.path.exists("/Users/pdeguz01/Documents/git/PeterdeGuzman_Mini5"):
-        os.chdir("/Users/pdeguz01/Documents/git/PeterdeGuzman_Mini5")
+    if os.path.exists("/Users/pdeguz01/Documents/git/PeterdeGuzman_Mini6"):
+        os.chdir("/Users/pdeguz01/Documents/git/PeterdeGuzman_Mini6")
     else:
         print("Directory does not exist.")
 
