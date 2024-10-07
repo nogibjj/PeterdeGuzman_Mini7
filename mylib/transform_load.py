@@ -5,14 +5,58 @@ Transform and load with SQlite3 database
 import sqlite3
 import csv
 
-# dataset = "./data/pollingplaces_2020.csv"
 
-# def load_voterreg(dataset):
+def load_voterreg(dataset, year):
+    data = open(dataset, newline="", encoding="utf-16")
+    db_name = "voterreg_"
+    payload = csv.reader(open(dataset, newline="", encoding="utf-16"), delimiter="\t")
+    conn = sqlite3.connect(f"{db_name}{year}.db")
+    c = conn.cursor()
+    # generate new table for the database
+    c.execute(f"DROP TABLE IF EXISTS {db_name}{year}")
+    c.execute(
+        f"""
+            CREATE TABLE {db_name}{year} (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            election_dt DATE,
+            county_name TEXT,
+            polling_place_id INTEGER,
+            polling_place_name TEXT,
+            precinct_name TEXT,
+            house_num INTEGER,
+            street_name TEXT,
+            city TEXT,
+            state TEXT,
+            zip TEXT)
+            """
+    )
+    # insert values
+    c.executemany(
+        f"""
+            INSERT INTO {db_name}{year} (
+            election_dt,
+            county_name,
+            polling_place_id,
+            polling_place_name,
+            precinct_name,
+            house_num,
+            street_name,
+            city,
+            state,
+            zip)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """,
+        payload,
+    )
+    conn.commit()
+    conn.close()
+    return f"{db_name}{year}.db"
+
 
 # def load_votehistory(dataset):
 
 
-def load_pollingplaces(dataset="./data/pollingplaces_2020.csv", year=2020):
+def load_pollingplaces(dataset, year):
     data = open(dataset, newline="", encoding="utf-16")
     # NCSBE data includes null bytes, which must be removed
     payload = csv.reader((line.replace("\0", "") for line in data), delimiter="\t")
@@ -20,10 +64,10 @@ def load_pollingplaces(dataset="./data/pollingplaces_2020.csv", year=2020):
     conn = sqlite3.connect(f"{db_name}{year}.db")
     c = conn.cursor()
     # generate new table for the database
-    c.execute("DROP TABLE IF EXISTS pollingplaces_2020")
+    c.execute(f"DROP TABLE IF EXISTS {db_name}{year}")
     c.execute(
-        """
-            CREATE TABLE pollingplaces_2020 (
+        f"""
+            CREATE TABLE {db_name}{year} (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             election_dt DATE,
             county_name TEXT, 
@@ -39,8 +83,8 @@ def load_pollingplaces(dataset="./data/pollingplaces_2020.csv", year=2020):
     )
     # insert values
     c.executemany(
-        """
-            INSERT INTO pollingplaces_2020 (
+        f"""
+            INSERT INTO {db_name}{year} (
             election_dt, 
             county_name,
             polling_place_id,
@@ -57,8 +101,8 @@ def load_pollingplaces(dataset="./data/pollingplaces_2020.csv", year=2020):
     )
     conn.commit()
     conn.close()
-    return "pollingplaces_2020.db"
+    return f"{db_name}{year}.db"
 
 
 if __name__ == "__main__":
-    load_pollingplaces()
+    load_pollingplaces(dataset="./data/pollingplaces_2020.csv", year=2020)
