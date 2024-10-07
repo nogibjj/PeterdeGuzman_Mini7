@@ -7,7 +7,6 @@ import csv
 
 
 def load_voterreg(dataset, year):
-    data = open(dataset, newline="", encoding="utf-16")
     db_name = "voterreg_"
     payload = csv.reader(open(dataset, newline="", encoding="utf-16"), delimiter="\t")
     conn = sqlite3.connect(f"{db_name}{year}.db")
