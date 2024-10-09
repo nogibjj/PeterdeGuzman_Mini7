@@ -8,10 +8,6 @@ import zipfile
 import chardet
 import io
 
-# might need to create two different extracts
-# voter reg encoding is Windows-1252
-# vote history encoding is ascii
-
 
 # test encoding function of zipped files accessible by a URL
 def test_encoding_zippedfile(url):
