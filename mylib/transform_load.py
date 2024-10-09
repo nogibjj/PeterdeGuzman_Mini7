@@ -21,7 +21,7 @@ def transform_voterreg(txtfile):
         txtfile, delimiter="\t", encoding="windows-1252", on_bad_lines="skip"
     )
 
-    # Save as UTF-8 encoded CSV
+    # Save as UTF-16 encoded CSV
     df.to_csv(
         "output.csv",
         sep="\t",
