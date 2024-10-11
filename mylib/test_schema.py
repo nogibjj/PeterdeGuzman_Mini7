@@ -34,5 +34,7 @@ def print_schema(db_file):
 
 
 # Specify the path to your SQLite database
-db_file = "/Users/pdeguz01/Documents/git/PeterdeGuzman_Mini6/voterreg_2020.db"
+db_file = "/Users/pdeguz01/Documents/git/PeterdeGuzman_Mini6/voterreg_2024.db"
 print_schema(db_file)
+db_file2 = "/Users/pdeguz01/Documents/git/PeterdeGuzman_Mini6/pollingplaces_2020.db"
+print_schema(db_file2)

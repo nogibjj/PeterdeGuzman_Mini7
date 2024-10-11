@@ -29,7 +29,7 @@ def test_encoding_zippedfile(url):
                     print(f"\nEncoding of {filename}: {encoding_info['encoding']}")
 
 
-def check_encoding_directory(directory):
+def check_txtencoding_directory(directory):
     # Loop through all files in the directory
     for filename in os.listdir(directory):
         if filename.endswith(".txt"):
