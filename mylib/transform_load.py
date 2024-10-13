@@ -12,7 +12,7 @@ from dotenv import load_dotenv
 csv.field_size_limit(100000000)
 
 # set cwd
-main_directory = "/Users/pdeguz01/Documents/git/PeterdeGuzman_Mini6/"  # Change this to your desired path
+main_directory = "/Users/pdeguz01/Documents/git/PeterdeGuzman_Mini6/"
 os.chdir(main_directory)
 
 # Transform functions
@@ -83,7 +83,7 @@ def load_voterreg(netid, dataset, date):
     ) as conn:
         c = conn.cursor()
         # generate new table for the database
-        c.execute(f"SHOW TABLES FROM default LIKE 'ped19*'")
+        c.execute(f"SHOW TABLES FROM default LIKE '{netid}*'")
         result = c.fetchall()
         if not result:
             c.execute(
@@ -166,7 +166,6 @@ def load_voterreg(netid, dataset, date):
     return "success"
 
 
-# update table columns and values
 def load_votehistory(netid, dataset, date):
     db_name = "votehist_"
     payload = csv.reader(
@@ -263,30 +262,30 @@ def load_votehistory(netid, dataset, date):
 #     return f"{db_name}{year}.db"
 
 
-if __name__ == "__main__":
-    today = datetime.now()
-    transform_voterreg(
-        txtfile=f"{main_directory}/data/ncvoter32.txt",
-        county="Durham",
-        date="241011",
-        directory="data",
-    )
-    transform_votehistory(
-        txtfile=f"{main_directory}/data/ncvhis32.txt",
-        county="Durham",
-        date="241011",
-        directory="data",
-    )
-    # load_pollingplaces(
-    #     dataset=f"{main_directory}/data/pollingplaces_2020.csv", year=2020
-    # )
-    load_voterreg(
-        netid="ped19",
-        dataset=f"{main_directory}/data/voterreg_Durham241011.csv",
-        date=today.strftime("%Y_%m_%d"),
-    )
-    load_votehistory(
-        netid="ped19",
-        dataset=f"{main_directory}/data/votehist_Durham241011.csv",
-        date=today.strftime("%Y_%m_%d"),
-    )
+# if __name__ == "__main__":
+#     today = datetime.now()
+#     transform_voterreg(
+#         txtfile=f"{main_directory}/data/ncvoter32.txt",
+#         county="Durham",
+#         date="241011",
+#         directory="data",
+#     )
+#     transform_votehistory(
+#         txtfile=f"{main_directory}/data/ncvhis32.txt",
+#         county="Durham",
+#         date="241011",
+#         directory="data",
+#     )
+#     # load_pollingplaces(
+#     #     dataset=f"{main_directory}/data/pollingplaces_2020.csv", year=2020
+#     # )
+#     load_voterreg(
+#         netid="ped19",
+#         dataset=f"{main_directory}/data/voterreg_Durham241011.csv",
+#         date=today.strftime("%Y_%m_%d"),
+#     )
+#     load_votehistory(
+#         netid="ped19",
+#         dataset=f"{main_directory}/data/votehist_Durham241011.csv",
+#         date=today.strftime("%Y_%m_%d"),
+#     )

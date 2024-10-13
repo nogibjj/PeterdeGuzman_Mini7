@@ -12,3 +12,5 @@ pandas
 matplotlib
 numpy
 requests
+databricks-sql-connector
+python-dotenv

@@ -85,21 +85,20 @@ def extract_zip(url, directory):
     return directory
 
 
-if __name__ == "__main__":
-    if os.path.exists("/Users/pdeguz01/Documents/git/PeterdeGuzman_Mini6"):
-        os.chdir("/Users/pdeguz01/Documents/git/PeterdeGuzman_Mini6")
-    else:
-        print("Directory does not exist.")
-
-    extract(
-        url="https://s3.amazonaws.com/dl.ncsbe.gov/ENRS/2020_11_03/polling_place_20201103.csv",
-        filepath="data/pollingplaces_2020.csv",
-        directory="data",
-    )
-    extract_zip(
-        url="https://s3.amazonaws.com/dl.ncsbe.gov/data/ncvoter32.zip",
-        directory="data",
-    )
-    extract_zip(
-        url="https://s3.amazonaws.com/dl.ncsbe.gov/data/ncvhis32.zip", directory="data"
-    )
+# if __name__ == "__main__":
+#     if os.path.exists("/Users/pdeguz01/Documents/git/PeterdeGuzman_Mini6"):
+#         os.chdir("/Users/pdeguz01/Documents/git/PeterdeGuzman_Mini6")
+#     else:
+#         print("Directory does not exist.")
+# extract(
+#     url="https://s3.amazonaws.com/dl.ncsbe.gov/ENRS/2020_11_03/polling_place_20201103.csv",
+#     filepath="data/pollingplaces_2020.csv",
+#     directory="data",
+# )
+# extract_zip(
+#     url="https://s3.amazonaws.com/dl.ncsbe.gov/data/ncvoter32.zip",
+#     directory="data",
+# )
+# extract_zip(
+#     url="https://s3.amazonaws.com/dl.ncsbe.gov/data/ncvhis32.zip", directory="data"
+# )

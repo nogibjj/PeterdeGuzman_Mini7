@@ -2,55 +2,35 @@
 Query the dataset
 """
 
-import sqlite3
+import os
+from databricks import sql
+from dotenv import load_dotenv
+
+# Define a global variable for the log file
+LOG_FILE = "query_log.md"
 
 
-def query_create():
-    conn = sqlite3.connect("pollingplaces_2020.db")
-    cursor = conn.cursor()
-    # create query
-    cursor.execute(
-        """
-        INSERT INTO pollingplaces_2020 
-        (election_dt,county_name,polling_place_id, polling_place_name, precinct_name, 
-        house_num, street_name, city, state,zip) 
-        VALUES(11/03/2020, 'DURHAM', 99, 'GROSS HALL', 'DUKE MIDS', 
-        140, 'SCIENCE DRIVE', 'DURHAM', 'NC', '27708')
-        """
-    )
-    conn.close()
-    return "Create Success"
+def log_query(query, result="none"):
+    """adds to a query markdown file"""
+    with open(LOG_FILE, "a") as file:
+        file.write(f"```sql\n{query}\n```\n\n")
+        file.write(f"```response from databricks\n{result}\n```\n\n")
 
 
-def query_read():
-    conn = sqlite3.connect("pollingplaces_2020.db")
-    cursor = conn.cursor()
-    # execute read
-    cursor.execute("SELECT * FROM pollingplaces_2020 LIMIT 10")
-    conn.close()
-    return "Read Success"
+def general_query(query):
+    """runs a query a user inputs"""
 
-
-def query_update():
-    conn = sqlite3.connect("pollingplaces_2020.db")
-    cursor = conn.cursor()
-    # update
-    cursor.execute("UPDATE pollingplaces_2020 SET county_name = 'DURHAM' WHERE id = 20")
-    conn.close()
-    return "Update Success"
-
-
-def query_delete():
-    conn = sqlite3.connect("pollingplaces_2020.db")
-    cursor = conn.cursor()
-    # delete
-    cursor.execute("DELETE FROM pollingplaces_2020 WHERE id = 10")
-    conn.close()
-    return "Delete Success"
-
-
-if __name__ == "__main__":
-    query_create()
-    query_read()
-    query_update()
-    query_delete()
+    load_dotenv()
+    server_h = os.getenv("sql_server_host")
+    access_token = os.getenv("databricks_api_key")
+    http_path = os.getenv("sql_http")
+    with sql.connect(
+        server_hostname=server_h,
+        http_path=http_path,
+        access_token=access_token,
+    ) as conn:
+        c = conn.cursor()
+        c.execute(query)
+        result = c.fetchall()
+    c.close()
+    log_query(f"{query}", result)
