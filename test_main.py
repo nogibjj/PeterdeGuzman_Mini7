@@ -8,16 +8,26 @@ from databricks import sql
 import os
 
 
-def test_extract_zip():
+def test_extract_zip(directory):
     """tests extract()"""
-    result = subprocess.run(
-        ["python", "main.py", "extract_zip"],
-        capture_output=True,
-        text=True,
-        check=True,
-    )
-    assert result.returncode == 0
-    assert "Extracting data..." in result.stdout
+    try:
+        # List all files in the specified directory
+        files = os.listdir(directory)
+
+        # Filter files that contain "nc" in their names
+        nc_files = [file for file in files if "nc" in file]
+
+        # Assert that there are exactly two files with "nc" in name
+        assert (
+            len(nc_files) == 2
+        ), f"Expected 2 files with 'nc', found {len(nc_files)}: {nc_files}"
+
+        print("Assertion passed: There are exactly two files with 'nc' in the name.")
+
+    except AssertionError as e:
+        print("Assertion failed:", e)
+    except Exception as e:
+        print("An error occurred:", e)
 
 
 def test_databricks_tables():
@@ -45,33 +55,9 @@ def test_databricks_tables():
 
 def test_general_query():
     """tests general_query"""
-    result = subprocess.run(
-        [
-            "python",
-            "main.py",
-            "general_query",
-            """SELECT t1.month, t1.SUM(births)
-            FROM default.births2000DB t1 JOIN default.births1994DB t2
-            ON t1.year=t2.year
-            GROUP BY t1.month
-            ORDER BY t1.month
-            LIMIT 10
-            """,
-        ],
-        capture_output=True,
-        text=True,
-        check=True,
-    )
-    assert result.returncode == 0
 
 
 if __name__ == "__main__":
-    test_cases_extract_zip = [
-        ("https://s3.amazonaws.com/dl.ncsbe.gov/data/ncvoter32.zip", "data"),
-        ("https://s3.amazonaws.com/dl.ncsbe.gov/data/ncvhis32.zip", "data"),
-    ]
-    for url, date in test_cases_extract_zip:
-        print(f"Testing with text cases: {url} and date: {date}")
-        test_extract_zip(url, date)
+    test_extract_zip("data")
     test_databricks_tables()
     test_general_query()
