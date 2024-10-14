@@ -68,10 +68,7 @@ def transform_votehistory(txtfile, county, date, directory):
 def load_voterreg(netid, dataset, date):
     """Loads data into the databricks database"""
     db_name = "voterreg_"
-    payload = csv.reader(
-        open(dataset, encoding="utf-16"),
-        delimiter="\t",
-    )
+    df = pd.read_csv(dataset, delimiter="/t", encoding="utf-16", header=0)
     load_dotenv()
     server_h = os.getenv("sql_server_host")
     access_token = os.getenv("databricks_api_key")
@@ -88,7 +85,7 @@ def load_voterreg(netid, dataset, date):
         if not result:
             c.execute(
                 f"""
-            CREATE TABLE IF NOT EXISTS{netid}{db_name}{date} (
+            CREATE TABLE IF NOT EXISTS {netid}{db_name}{date} (
             county_id INT,
             county_desc STRING,
             voter_reg_num STRING,
@@ -159,7 +156,7 @@ def load_voterreg(netid, dataset, date):
             """
             )
             # insert
-            for _, row in payload.iterrows():
+            for _, row in df.iterrows():
                 convert = (_,) + tuple(row)
                 c.execute(f"INSERT INTO {netid}{db_name}{date} VALUES {convert}")
         c.close()
@@ -168,10 +165,7 @@ def load_voterreg(netid, dataset, date):
 
 def load_votehistory(netid, dataset, date):
     db_name = "votehist_"
-    payload = csv.reader(
-        open(dataset, encoding="utf-16"),
-        delimiter="\t",
-    )
+    df = pd.read_csv(dataset, delimiter="/t", encoding="utf-16", header=0)
     load_dotenv()
     server_h = os.getenv("sql_server_host")
     access_token = os.getenv("databricks_api_key")
@@ -188,7 +182,7 @@ def load_votehistory(netid, dataset, date):
         if not result:
             c.execute(
                 f"""
-            CREATE TABLE {netid}{db_name}{date} (
+            CREATE TABLE IF NOT EXISTS {netid}{db_name}{date} (
             county_id INT,
             county_desc STRING,
             voter_reg_num STRING,
@@ -207,7 +201,7 @@ def load_votehistory(netid, dataset, date):
             """
             )
             # insert
-            for _, row in payload.iterrows():
+            for _, row in df.iterrows():
                 convert = (_,) + tuple(row)
                 c.execute(f"INSERT INTO {netid}{db_name}{date} VALUES {convert}")
         c.close()

@@ -2,7 +2,6 @@
 Test main.py script
 """
 
-import subprocess
 from dotenv import load_dotenv
 from databricks import sql
 import os

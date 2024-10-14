@@ -50,7 +50,9 @@ def main_results():
         dataset=f"{main_directory}/data/votehist_Durham241011.csv",
         date=today.strftime("%Y_%m_%d"),
     )
-    # general_query()
+    general_query(
+        """ SELECT COUNT(*) AS count_of_race_b FROM ped19voterreg_2024_10_14 WHERE race = 'b' """
+    )
     # general_query()
 
 
