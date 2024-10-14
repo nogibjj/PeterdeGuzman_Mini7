@@ -12,7 +12,6 @@ from mylib.transform_load import (
 )
 from mylib.query import general_query
 import os
-from datetime import datetime
 
 # Extract, Transform and Load
 # Query
@@ -26,7 +25,6 @@ def main_results():
     extract_zip(
         url="https://s3.amazonaws.com/dl.ncsbe.gov/data/ncvhis32.zip", directory="data"
     )
-    today = datetime.now()
     main_directory = "/Users/pdeguz01/Documents/git/PeterdeGuzman_Mini6/"
     os.chdir(main_directory)
     transform_voterreg(
@@ -56,7 +54,9 @@ def main_results():
     load_voterreg(dataset=f"{main_directory}data/trimmed_voterreg.csv")
     load_votehistory(dataset=f"{main_directory}/data/trimmed_voterhist.csv")
     general_query(
-        """ SELECT voted_party_desc, COUNT(*) AS total_count FROM ped19_voterreg AS t1 JOIN ped19_voterhist AS t2 ON t1.ncid = t2.ncid GROUP BY voted_party_desc ORDER BY total_count DESC """
+        """ SELECT voted_party_desc, COUNT(*) AS total_count 
+        FROM ped19_voterreg AS t1 JOIN ped19_voterhist AS t2 ON t1.ncid = t2.ncid 
+        GROUP BY voted_party_desc ORDER BY total_count DESC """
     )
 
 

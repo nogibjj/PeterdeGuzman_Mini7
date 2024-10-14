@@ -6,7 +6,6 @@ from databricks import sql
 import csv
 import pandas as pd
 import os
-from datetime import datetime
 from dotenv import load_dotenv
 
 csv.field_size_limit(100000000)
