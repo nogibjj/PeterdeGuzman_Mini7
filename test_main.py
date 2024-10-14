@@ -33,14 +33,6 @@ def test_extract_zip():
 
 def test_load_voterreg():
     """tests transform and load functions"""
-    directory = "data"
-    dataset = f"{directory}/trimmed_voterreg.csv"
-    payload = csv.reader(
-        open(dataset, encoding="utf-16"),
-        delimiter="\t",
-    )
-    # print(*payload)
-    next(payload)
     load_dotenv()
     server_h = os.getenv("sql_server_host")
     access_token = os.getenv("databricks_api_key")
@@ -61,14 +53,6 @@ def test_load_voterreg():
 
 def test_load_votehistory():
     """tests transform and load functions"""
-    directory = "data"
-    dataset = f"{directory}/trimmed_voterhist.csv"
-    payload = csv.reader(
-        open(dataset, encoding="utf-16"),
-        delimiter="\t",
-    )
-    # print(*payload)
-    next(payload)
     load_dotenv()
     server_h = os.getenv("sql_server_host")
     access_token = os.getenv("databricks_api_key")
