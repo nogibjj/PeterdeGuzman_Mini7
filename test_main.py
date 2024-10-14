@@ -5,6 +5,7 @@ Test main.py script
 from dotenv import load_dotenv
 from databricks import sql
 import os
+import csv
 
 
 def test_extract_zip(directory):
@@ -29,34 +30,61 @@ def test_extract_zip(directory):
         print("An error occurred:", e)
 
 
-def test_databricks_tables():
+def test_load_voterreg(dataset):
     """tests transform and load functions"""
+    payload = csv.reader(
+        open(dataset, encoding="utf-16"),
+        delimiter="\t",
+    )
+    # print(*payload)
+    next(payload)
     load_dotenv()
     server_h = os.getenv("sql_server_host")
     access_token = os.getenv("databricks_api_key")
     http_path = os.getenv("sql_http")
-    query = """
-# need to include query that joins the voter reg and vote history tables
-    """
     with sql.connect(
         server_hostname=server_h,
         http_path=http_path,
         access_token=access_token,
     ) as conn:
-        c = conn.cursor()
-        # generate new table for the database
-        c.execute(query)
-        tables = c.fetchall()
-    c.close()
-    table = [table[0] for table in tables]
-    return print(f"The following tables exist with a netid of ped19: {table}.")
+        with conn.cursor() as c:
+            # generate new table for the database
+            c.execute("""SELECT * FROM ped19_voterreg """)
+            result = c.fetchall()
+            c.close()
+            conn.close()
+    assert result is not None
 
 
-def test_general_query():
-    """tests general_query"""
+def test_load_votehistory(dataset):
+    """tests transform and load functions"""
+    payload = csv.reader(
+        open(dataset, encoding="utf-16"),
+        delimiter="\t",
+    )
+    # print(*payload)
+    next(payload)
+    load_dotenv()
+    server_h = os.getenv("sql_server_host")
+    access_token = os.getenv("databricks_api_key")
+    http_path = os.getenv("sql_http")
+    with sql.connect(
+        server_hostname=server_h,
+        http_path=http_path,
+        access_token=access_token,
+    ) as conn:
+        with conn.cursor() as c:
+            # generate new table for the database
+            c.execute("""SELECT * FROM ped19_voterhist """)
+            result = c.fetchall()
+            c.close()
+            conn.close()
+    assert result is not None
 
 
 if __name__ == "__main__":
     test_extract_zip("data")
-    test_databricks_tables()
-    test_general_query()
+    main_directory = "/Users/pdeguz01/Documents/git/PeterdeGuzman_Mini6/"
+    os.chdir(main_directory)
+    test_load_voterreg(dataset=f"{main_directory}data/trimmed_voterreg.csv")
+    test_load_votehistory(dataset=f"{main_directory}/data/trimmed_voterhist.csv")

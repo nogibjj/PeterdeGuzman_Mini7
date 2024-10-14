@@ -7,6 +7,7 @@ from mylib.transform_load import (
     transform_voterreg,
     transform_votehistory,
     load_voterreg,
+    trim_dataset,
     load_votehistory,
 )
 from mylib.query import general_query
@@ -40,20 +41,23 @@ def main_results():
         date="241011",
         directory="data",
     )
-    load_voterreg(
-        netid="ped19",
+    trim_dataset(
         dataset=f"{main_directory}/data/voterreg_Durham241011.csv",
-        date=today.strftime("%Y_%m_%d"),
+        dataset_type="voterreg",
+        n=5000,
+        directory="data",
     )
-    load_votehistory(
-        netid="ped19",
+    trim_dataset(
         dataset=f"{main_directory}/data/votehist_Durham241011.csv",
-        date=today.strftime("%Y_%m_%d"),
+        dataset_type="voterhist",
+        n=5000,
+        directory="data",
     )
+    load_voterreg(dataset=f"{main_directory}data/trimmed_voterreg.csv")
+    load_votehistory(dataset=f"{main_directory}/data/trimmed_voterhist.csv")
     general_query(
-        """ SELECT COUNT(*) AS count_of_race_b FROM ped19voterreg_2024_10_14 WHERE race = 'b' """
+        """ SELECT voted_party_desc, COUNT(*) AS total_count FROM ped19_voterreg AS t1 JOIN ped19_voterhist AS t2 ON t1.ncid = t2.ncid GROUP BY voted_party_desc ORDER BY total_count DESC """
     )
-    # general_query()
 
 
 main_results()
