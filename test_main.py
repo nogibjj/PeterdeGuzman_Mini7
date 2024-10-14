@@ -101,28 +101,27 @@ if __name__ == "__main__":
     extract_zip(
         url="https://s3.amazonaws.com/dl.ncsbe.gov/data/ncvhis32.zip", directory="data"
     )
-    main_directory = "/Users/pdeguz01/Documents/git/PeterdeGuzman_Mini6/"
-    os.chdir(main_directory)
+    directory = "data"
     transform_voterreg(
-        txtfile=f"{main_directory}/data/ncvoter32.txt",
+        txtfile=f"{directory}/ncvoter32.txt",
         county="Durham",
         date="241011",
         directory="data",
     )
     transform_votehistory(
-        txtfile=f"{main_directory}/data/ncvhis32.txt",
+        txtfile=f"{directory}/data/ncvhis32.txt",
         county="Durham",
         date="241011",
         directory="data",
     )
     trim_dataset(
-        dataset=f"{main_directory}/data/voterreg_Durham241011.csv",
+        dataset=f"{directory}/voterreg_Durham241011.csv",
         dataset_type="voterreg",
         n=5000,
         directory="data",
     )
     trim_dataset(
-        dataset=f"{main_directory}/data/votehist_Durham241011.csv",
+        dataset=f"{directory}/votehist_Durham241011.csv",
         dataset_type="voterhist",
         n=5000,
         directory="data",
