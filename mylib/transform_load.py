@@ -11,8 +11,8 @@ from dotenv import load_dotenv
 csv.field_size_limit(100000000)
 
 # set cwd
-main_directory = "/Users/pdeguz01/Documents/git/PeterdeGuzman_Mini6/"
-os.chdir(main_directory)
+# main_directory = "/Users/pdeguz01/Documents/git/PeterdeGuzman_Mini6/"
+# os.chdir(main_directory)
 
 # Transform functions
 # might need to create two different transforms
