@@ -12,6 +12,8 @@ from mylib.transform_load import (
 )
 from mylib.query import general_query
 import os
+from test_main import test_extract_zip, test_load_voterreg, test_load_votehistory
+
 
 # Extract, Transform and Load
 # Query
@@ -58,6 +60,9 @@ def main_results():
         FROM ped19_voterreg AS t1 JOIN ped19_voterhist AS t2 ON t1.ncid = t2.ncid 
         GROUP BY voted_party_desc ORDER BY total_count DESC """
     )
+    test_extract_zip()
+    test_load_voterreg()
+    test_load_votehistory()
 
 
 main_results()

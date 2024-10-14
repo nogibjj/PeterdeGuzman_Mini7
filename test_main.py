@@ -6,12 +6,6 @@ from dotenv import load_dotenv
 from databricks import sql
 import os
 import csv
-from mylib.transform_load import (
-    transform_voterreg,
-    transform_votehistory,
-    trim_dataset,
-)
-from mylib.extract import extract_zip
 
 
 def test_extract_zip():
@@ -93,39 +87,39 @@ def test_load_votehistory():
     assert result is not None
 
 
-if __name__ == "__main__":
-    extract_zip(
-        url="https://s3.amazonaws.com/dl.ncsbe.gov/data/ncvoter32.zip",
-        directory="data",
-    )
-    extract_zip(
-        url="https://s3.amazonaws.com/dl.ncsbe.gov/data/ncvhis32.zip", directory="data"
-    )
-    directory = "data"
-    transform_voterreg(
-        txtfile=f"{directory}/ncvoter32.txt",
-        county="Durham",
-        date="241011",
-        directory="data",
-    )
-    transform_votehistory(
-        txtfile=f"{directory}/data/ncvhis32.txt",
-        county="Durham",
-        date="241011",
-        directory="data",
-    )
-    trim_dataset(
-        dataset=f"{directory}/voterreg_Durham241011.csv",
-        dataset_type="voterreg",
-        n=5000,
-        directory="data",
-    )
-    trim_dataset(
-        dataset=f"{directory}/votehist_Durham241011.csv",
-        dataset_type="voterhist",
-        n=5000,
-        directory="data",
-    )
-    test_extract_zip()
-    test_load_voterreg()
-    test_load_votehistory()
+# if __name__ == "__main__":
+# extract_zip(
+#     url="https://s3.amazonaws.com/dl.ncsbe.gov/data/ncvoter32.zip",
+#     directory="data",
+# )
+# extract_zip(
+#     url="https://s3.amazonaws.com/dl.ncsbe.gov/data/ncvhis32.zip", directory="data"
+# )
+# directory = "data"
+# transform_voterreg(
+#     txtfile=f"{directory}/ncvoter32.txt",
+#     county="Durham",
+#     date="241011",
+#     directory="data",
+# )
+# transform_votehistory(
+#     txtfile=f"{directory}/data/ncvhis32.txt",
+#     county="Durham",
+#     date="241011",
+#     directory="data",
+# )
+# trim_dataset(
+#     dataset=f"{directory}/voterreg_Durham241011.csv",
+#     dataset_type="voterreg",
+#     n=5000,
+#     directory="data",
+# )
+# trim_dataset(
+#     dataset=f"{directory}/votehist_Durham241011.csv",
+#     dataset_type="voterhist",
+#     n=5000,
+#     directory="data",
+# )
+# test_extract_zip()
+# test_load_voterreg()
+# test_load_votehistory()
