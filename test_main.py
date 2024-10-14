@@ -39,9 +39,8 @@ def test_extract_zip():
 
 def test_load_voterreg():
     """tests transform and load functions"""
-    dataset = (
-        "/Users/pdeguz01/Documents/git/PeterdeGuzman_Mini6/data/trimmed_voterreg.csv"
-    )
+    directory = "data"
+    dataset = f"{directory}/trimmed_voterreg.csv"
     payload = csv.reader(
         open(dataset, encoding="utf-16"),
         delimiter="\t",
@@ -68,9 +67,8 @@ def test_load_voterreg():
 
 def test_load_votehistory():
     """tests transform and load functions"""
-    dataset = (
-        "/Users/pdeguz01/Documents/git/PeterdeGuzman_Mini6/data/trimmed_voterhist.csv"
-    )
+    directory = "data"
+    dataset = f"{directory}/trimmed_voterhist.csv"
     payload = csv.reader(
         open(dataset, encoding="utf-16"),
         delimiter="\t",
