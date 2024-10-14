@@ -8,10 +8,11 @@ import os
 import csv
 
 
-def test_extract_zip(directory):
+def test_extract_zip():
     """tests extract()"""
     try:
         # List all files in the specified directory
+        directory = "data"
         files = os.listdir(directory)
 
         # Filter files that contain "nc" in their names
@@ -30,8 +31,11 @@ def test_extract_zip(directory):
         print("An error occurred:", e)
 
 
-def test_load_voterreg(dataset):
+def test_load_voterreg():
     """tests transform and load functions"""
+    main_directory = "/Users/pdeguz01/Documents/git/PeterdeGuzman_Mini6/"
+    os.chdir(main_directory)
+    dataset = f"{main_directory}data/trimmed_voterreg.csv"
     payload = csv.reader(
         open(dataset, encoding="utf-16"),
         delimiter="\t",
@@ -56,8 +60,11 @@ def test_load_voterreg(dataset):
     assert result is not None
 
 
-def test_load_votehistory(dataset):
+def test_load_votehistory():
     """tests transform and load functions"""
+    main_directory = "/Users/pdeguz01/Documents/git/PeterdeGuzman_Mini6/"
+    os.chdir(main_directory)
+    dataset = f"{main_directory}/data/trimmed_voterhist.csv"
     payload = csv.reader(
         open(dataset, encoding="utf-16"),
         delimiter="\t",
@@ -83,8 +90,6 @@ def test_load_votehistory(dataset):
 
 
 if __name__ == "__main__":
-    test_extract_zip("data")
-    main_directory = "/Users/pdeguz01/Documents/git/PeterdeGuzman_Mini6/"
-    os.chdir(main_directory)
-    test_load_voterreg(dataset=f"{main_directory}data/trimmed_voterreg.csv")
-    test_load_votehistory(dataset=f"{main_directory}/data/trimmed_voterhist.csv")
+    test_extract_zip()
+    test_load_voterreg()
+    test_load_votehistory()
