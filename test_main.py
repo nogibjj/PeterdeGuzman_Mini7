@@ -5,7 +5,6 @@ Test main.py script
 from dotenv import load_dotenv
 from databricks import sql
 import os
-import csv
 
 
 def test_extract_zip():
