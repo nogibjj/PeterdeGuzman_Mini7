@@ -11,6 +11,7 @@ from mylib.transform_load import (
     transform_votehistory,
     trim_dataset,
 )
+from mylib.extract import extract_zip
 
 
 def test_extract_zip():
