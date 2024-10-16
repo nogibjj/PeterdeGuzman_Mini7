@@ -1,7 +1,7 @@
- # This is a README for IDS 706 Mini Project 6
+ # This is a README for IDS 706 Mini Project 7
 
 ### Status Badge:
-[![CICD](https://github.com/nogibjj/PeterdeGuzman_Mini6/actions/workflows/cicd.yml/badge.svg)](https://github.com/nogibjj/PeterdeGuzman_Mini6/actions/workflows/cicd.yml)
+
 
 ## Summary and Project Motivation:
 - The goal of this project was to create an ETL-Query (Extract, Transform, Load, Query) pipeline using Python and Databricks to join and query individual-level voter registration and vote history data for North Carolina. 
