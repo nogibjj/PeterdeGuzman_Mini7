@@ -13,13 +13,33 @@ from mylib.transform_load import (
 from mylib.query import general_query
 import os
 from test_main import test_extract_zip, test_load_voterreg, test_load_votehistory
-
+import argparse
+import sys
 
 # Extract, Transform and Load
 # Query
 
 
-def main_results():
+def handle_arguments(args):
+    """add actions for argument calls"""
+    parser = argparse.ArgumentParser(description="ETL-Query script")
+    parser.add_argument(
+        "action",
+        choices=[
+            "extract_zip",
+            "transform_voterreg",
+            "transform_votehistory",
+        ],
+        # shows how to run the output
+    )
+    args = parser.parse_args(args[:1])
+    if args.action == "general_query":
+        parser.add_argument("query")
+    return parser.parse_args(sys.argv[1:])
+
+
+def main():
+
     extract_zip(
         url="https://s3.amazonaws.com/dl.ncsbe.gov/data/ncvoter32.zip",
         directory="data",
@@ -65,4 +85,5 @@ def main_results():
     test_load_votehistory()
 
 
-main_results()
+if __name__ == "__main__":
+    main()
